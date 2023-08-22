@@ -58,7 +58,7 @@
 					break;
 		}
 
-		echo "<h1>Resuldado: $result </h1>";
+		echo "<h1>Resultado: $result </h1>";
 				   
 				?>
 				
