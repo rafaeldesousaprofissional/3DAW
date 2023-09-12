@@ -3,6 +3,7 @@
         $email = "";
         $idade = "";
 		$msg = "";
+        $encontrou = "";
         $arquivoAlunoIn = fopen("aluno.txt", "r") or die("erro ao abrir arquivo");
         $x = 0;
 		$linhas[] = fgets($arquivoAlunoIn);
@@ -11,6 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Procuar Aluno</title>
      <style>
         table, th, td {
             text-align:center;
@@ -33,20 +35,23 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
 $matricula = $_POST["matricula"];
-echo "<table>";
-echo "<tr>";
-echo "<th>Nome</th>";
-echo "<th>Email</th>";
-echo "<th>Matricula</th>";
-echo "<th>Idade</th>";
-echo "</tr>";
-echo "<h3>Aluno(s) Encontrado(s)</h3>";
+
 while (!feof($arquivoAlunoIn)) {
 			$linhas[] = fgets($arquivoAlunoIn);
 			$colunaDados = explode(";", $linhas[$x]);
 
 			if($matricula == $colunaDados[2]){
-                echo "<p>Aluno n°" . $x+1 . " na lista</p>";
+                $encontrou=1;
+
+                echo "<table>";
+                echo "<tr>";
+                echo "<th>Nome</th>";
+                echo "<th>Email</th>";
+                echo "<th>Matricula</th>";
+                echo "<th>Idade</th>";
+                echo "</tr>";
+                echo "<h3>Aluno Encontrado</h3>";
+            
               
             echo "<tr>";
             echo "<td>" . $colunaDados[0] . "</td>";
@@ -54,9 +59,25 @@ while (!feof($arquivoAlunoIn)) {
             echo "<td>" . $colunaDados[2] . "</td>";
             echo "<td>" . $colunaDados[3] . "</td>";
             echo "</tr>";
+            break;
             }
 			$x++;
 }
+
+if($encontrou==1){
+
+    echo "<form action ='excluirAluno.php' method='POST'>
+    Deseja excluir esse aluno ? <br><br>
+    <button type='submit' name='matricula' value='$matricula'>Excluir</button> <br>
+    </form> ";
+
+    echo "<form action ='alterarAluno.php' method='POST'>
+    Deseja alterar esse aluno ? <br><br>
+    <button type='submit' name='matricula' value='$matricula'>Alterar</button>
+    </form> ";
+ 
+    }
+
 }
 
 fclose($arquivoAlunoIn);
