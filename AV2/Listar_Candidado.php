@@ -1,10 +1,4 @@
 <?php
-
-    $nome = $_GET["nome"];
-    $cpf = $_GET["cpf"];
-    $sala = $_GET["sala"];
-
-
     $servidor = "localhost";
     $username = "root";
     $senha = "";
@@ -13,7 +7,7 @@
     if ($conn->connect_error) {
        die("Conexao falhou, avise o administrador do sistema");
     }
-    $comandoSQL = "SELECT * from `Canditados`";
+    $comandoSQL = "SELECT * from `candidatos`";
     $resultado = $conn->query($comandoSQL);
 
      $arrCanditados[] = array();
@@ -25,7 +19,7 @@
     if ($resultado=true){
         $retorno=json_encode($arrCanditados);
     } else {
-        $retorno=json_encode("DEU RUIM!😭😭");
+        $retorno=json_encode("DEU RUIM!");
     }
 
     echo $retorno;
