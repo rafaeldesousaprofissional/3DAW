@@ -1,8 +1,4 @@
 <?php
-    $sala = $_POST["sala"];
-    $cpf1 = $_POST["cpf1"];
-    $cpf2 = $_POST["cpf2"];
-
     $servidor = "localhost";
     $username = "root";
     $senha = "";
@@ -11,9 +7,20 @@
     if ($conn->connect_error) {
        die("Conexao falhou, avise o administrador do sistema");
     }
-    $comandoSQL = "INSERT INTO `salas` (num_sala,cpf_fiscal_1,cpf_fiscal_2) values ('$sala','$cpf1',$cpf2)";
+    $comandoSQL = "SELECT * from `candidatos`";
     $resultado = $conn->query($comandoSQL);
 
-    $retorno=json_encode($resultado);
+     $arrCanditados[] = array();
+    $i = 0;
+    While ($linha = $resultado->fetch_assoc()){
+        $arrCanditados[$i] = $linha;
+        $i++;
+    }
+    if ($resultado=true){
+        $retorno=json_encode($arrCanditados);
+    } else {
+        $retorno=json_encode("DEU RUIM!");
+    }
+
     echo $retorno;
 ?>

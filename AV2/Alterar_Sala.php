@@ -1,5 +1,4 @@
 <?php
-    $nome = $_POST["nome"];
     $cpf = $_POST["cpf"];
     $sala = $_POST["sala"];
 
@@ -11,7 +10,7 @@
     if ($conn->connect_error) {
        die("Conexao falhou, avise o administrador do sistema");
     }
-    $comandoSQL = "INSERT INTO `Fiscais` (nome,cpf,sala) values ('$nome','$cpf',$sala)";
+    $comandoSQL = "UPDATE `Candidatos` SET `sala` ='$sala' WHERE cpf='$cpf'";
     $resultado = $conn->query($comandoSQL);
 
     $retorno=json_encode($resultado);
